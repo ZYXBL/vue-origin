@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <script src="node_modules/snabbdom/dist/snabbdom.min.js"></script>
+  <script src="node_modules/snabbdom/dist/snabbdom-style.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+    const { init, h } = snabbdom;
+    const patch = init([snabbdom_style.default])
+
+    function defineReactive (obj, key, val) {
+      Object.defineProperty(obj, key, {
+        get () {
+          console.log('get key:' + key, val);
+          return val
+        },
+        set (newVal) {
+          console.log('set key:' + key, 'newVal:' + newVal, 'oldVal:' + val);
+          if (newVal !== val) {
+            val = newVal
+            update();
+          }
+        }
+      })
+    }
+
+    var obj = {};
+    defineReactive(obj, 'foo', new Date().toLocaleDateString())
+
+    var vnode = patch(app, h('div#app', {style:{color: 'red'}}, obj.foo))
+
+    function update () {
+      // app.innerText = obj.foo;
+      vnode = patch(vnode, h('div#app', {style:{color: 'red'}}, obj.foo))
+    }
+
+    setInterval(() => {
+      obj.foo = new Date().toLocaleTimeString();
+    }, 1000)
+  </script>
+</body>
+</html>

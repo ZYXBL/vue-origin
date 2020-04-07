@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>kvue</title>
+</head>
+<body>
+  <div id="app">
+    <p>{{ counter }}</p>
+    <p k-text="counter"></p>
+    <p k-html="des"></p>
+    <!-- <p>{{ arr[0].test }}</p> -->
+  </div>
+
+  <script src="./kvue.js"></script>
+  <script>
+    let app = new KVue({
+      el: '#app',
+      data: {
+        counter: 1,
+        arr: [
+          { test: 1 }
+        ],
+        des: '<span style="color: red">des</span>'
+      }
+    });
+
+    // setInterval(() => {
+    //   app.counter++
+    //   // app.arr.forEach(item => {
+    //   //   item.test++
+    //   // });
+    // }, 1000);
+  </script>
+</body>
+</html>
